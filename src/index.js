@@ -88,10 +88,12 @@ class C3Chart extends React.Component {
 
     if (config.unloadBeforeLoad) {
         this.unloadData();
+        // Horrible hack to get around issue with stacked bar chart not loading correctly.
+        setTimeout(() => this.loadNewData(config.data), 500);
     }
-    
-    // Horrible hack to get around issue with stacked bar chart not loading correctly.
-    setTimeout(this.loadNewData(config.data), 500);
+    else {
+      this.loadNewData(config.data);
+    }
   }
 
   render() {

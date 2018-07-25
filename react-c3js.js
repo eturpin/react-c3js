@@ -84,16 +84,21 @@ var C3Chart = function (_React$Component) {
   }, {
     key: 'updateChart',
     value: function updateChart(config) {
+      var _this2 = this;
+
       if (!this.chart) {
         this.chart = this.generateChart((0, _reactDom.findDOMNode)(this), config);
       }
 
       if (config.unloadBeforeLoad) {
         this.unloadData();
+        // Horrible hack to get around issue with stacked bar chart not loading correctly.
+        setTimeout(function () {
+          return _this2.loadNewData(config.data);
+        }, 500);
+      } else {
+        this.loadNewData(config.data);
       }
-
-      // Horrible hack to get around issue with stacked bar chart not loading correctly.
-      setTimeout(this.loadNewData(config.data), 500);
     }
   }, {
     key: 'render',
