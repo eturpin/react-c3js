@@ -31,10 +31,13 @@ var c3 = void 0;
 var C3Chart = function (_React$Component) {
   _inherits(C3Chart, _React$Component);
 
-  function C3Chart() {
+  function C3Chart(props) {
     _classCallCheck(this, C3Chart);
 
-    return _possibleConstructorReturn(this, (C3Chart.__proto__ || Object.getPrototypeOf(C3Chart)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (C3Chart.__proto__ || Object.getPrototypeOf(C3Chart)).call(this, props));
+
+    _this.lastTimeout = null;
+    return _this;
   }
 
   _createClass(C3Chart, [{
@@ -93,7 +96,8 @@ var C3Chart = function (_React$Component) {
       if (config.unloadBeforeLoad) {
         this.unloadData();
         // Horrible hack to get around issue with stacked bar chart not loading correctly.
-        setTimeout(function () {
+        clearTimeout(this.lastTimeout);
+        this.lastTimeout = setTimeout(function () {
           return _this2.loadNewData(config.data);
         }, 500);
       } else {
@@ -108,11 +112,6 @@ var C3Chart = function (_React$Component) {
       return _react2.default.createElement('div', { className: className, style: style });
     }
   }], [{
-    key: 'displayName',
-    get: function get() {
-      return 'C3Chart';
-    }
-  }, {
     key: 'propTypes',
     get: function get() {
       return {

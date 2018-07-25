@@ -4,8 +4,10 @@ import { findDOMNode } from 'react-dom';
 let c3;
 
 class C3Chart extends React.Component {
-  static get displayName() {
-    return 'C3Chart';
+  
+  constructor(props) {
+    super(props);
+    this.lastTimeout = null;
   }
 
   static get propTypes() {
@@ -89,7 +91,8 @@ class C3Chart extends React.Component {
     if (config.unloadBeforeLoad) {
         this.unloadData();
         // Horrible hack to get around issue with stacked bar chart not loading correctly.
-        setTimeout(() => this.loadNewData(config.data), 500);
+        clearTimeout(this.lastTimeout);
+        this.lastTimeout = setTimeout(() => this.loadNewData(config.data), 500);
     }
     else {
       this.loadNewData(config.data);
