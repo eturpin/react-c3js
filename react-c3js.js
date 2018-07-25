@@ -92,7 +92,8 @@ var C3Chart = function (_React$Component) {
         this.unloadData();
       }
 
-      this.loadNewData(config.data);
+      // Horrible hack to get around issue with stacked bar chart not loading correctly.
+      setTimeout(this.loadNewData(config.data), 500);
     }
   }, {
     key: 'render',
